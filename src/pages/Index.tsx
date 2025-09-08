@@ -5,6 +5,11 @@ import Programs from "@/components/Programs";
 import Gallery from "@/components/Gallery";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import AboutUsPage from "@/components/AboutUsPage";
+import CoverflowSlider from "@/components/CoverflowSlider"
+import BasketballScene from "@/components/BasketballScene"
+import MeetAssistants from "@/components/MeetAssistants"
+import ScrollingGallery from "@/components/ScrollingGallery"
 
 const Index = () => {
   return (
@@ -13,6 +18,11 @@ const Index = () => {
       <main>
         <Hero />
         <About />
+        {/* <AboutUsPage /> */}
+        <CoverflowSlider />
+        <ScrollingGallery />
+        {/* <MeetAssistants /> */}
+        {/* <BasketballScene />(having some error) */} 
         <Programs />
         <Gallery />
         <Contact />

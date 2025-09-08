@@ -37,7 +37,7 @@ const Hero = () => {
 
           {/* Subheading */}
           <p className="text-xl md:text-2xl text-gray-200 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            Transform your athletic journey with premium training programs, cutting-edge equipment, and expert guidance designed for champions.
+            Empowering Sports organisations and their athletes to reach their peak performance through digitization, Sports Science & Artificial Intelligence.
           </p>
 
           {/* CTA Buttons */}

@@ -1,0 +1,329 @@
+import React, { useState, useEffect, useCallback } from "react";
+import { FaPlay, FaTimes, FaChevronDown, FaChevronUp, FaSun, FaMoon, FaClock, FaUser, FaTag } from "react-icons/fa";
+
+const App = () => {
+  const [darkMode, setDarkMode] = useState(false);
+  const [activeFaq, setActiveFaq] = useState(null);
+  const [showVideoModal, setShowVideoModal] = useState(false);
+  const [selectedVideo, setSelectedVideo] = useState(null);
+
+  const blogPosts = [
+    {
+      id: 1,
+      title: "Understanding Modern Web Development",
+      excerpt: "Explore the latest trends in web development and how they shape the future of the internet.",
+      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
+      readTime: "5 min",
+      author: "John Doe",
+      tags: ["Web Dev", "Technology"]
+    },
+    {
+      id: 2,
+      title: "The Rise of AI in Technology",
+      excerpt: "Discover how artificial intelligence is transforming various industries and our daily lives.",
+      image: "https://images.unsplash.com/photo-1555949963-aa79dcee981c",
+      readTime: "7 min",
+      author: "Jane Smith",
+      tags: ["AI", "Tech Trends"]
+    },
+    {
+      id: 3,
+      title: "Design Systems in 2024",
+      excerpt: "Learn about the importance of design systems in modern web applications.",
+      image: "https://images.unsplash.com/photo-1517292987719-0369a794ec0f",
+      readTime: "6 min",
+      author: "Mike Johnson",
+      tags: ["Design", "UI/UX"]
+    }
+  ];
+
+  const faqData = [
+    {
+      id: 1,
+      question: "What technologies do you cover?",
+      answer: "We cover a wide range of technologies including React, Vue, Angular, Node.js, and more."
+    },
+    {
+      id: 2,
+      question: "How often do you post new content?",
+      answer: "We publish new content twice a week, usually on Tuesdays and Thursdays."
+    },
+    {
+      id: 3,
+      question: "Can I contribute to the blog?",
+      answer: "Yes! We welcome guest posts from experienced developers. Please contact us for more information."
+    }
+  ];
+
+  const videos = [
+    {
+      id: 1,
+      title: "Getting Started with React",
+      thumbnail: "https://images.unsplash.com/photo-1633356122544-f134324a6cee",
+      url: "https://example.com/video1"
+    },
+    {
+      id: 2,
+      title: "Advanced CSS Techniques",
+      thumbnail: "https://images.unsplash.com/photo-1542831371-29b0f74f9713",
+      url: "https://example.com/video2"
+    },
+    {
+      id: 3,
+      title: "JavaScript Best Practices",
+      thumbnail: "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a",
+      url: "https://example.com/video3"
+    }
+  ];
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+    document.documentElement.classList.toggle("dark");
+  };
+
+  const openVideoModal = useCallback((video) => {
+    setSelectedVideo(video);
+    setShowVideoModal(true);
+  }, []);
+
+  return (
+    <div className={`min-h-screen ${darkMode ? "dark" : ""}`}>
+      <div className="bg-background dark:bg-dark-background text-foreground dark:text-dark-foreground">
+        {/* Hero Section */}
+        <section className="relative h-[80vh] flex items-center justify-center bg-gradient-to-r from-primary to-blue-600 dark:from-dark-primary dark:to-blue-800">
+          <div className="container mx-auto px-4 text-center">
+            <h1 className="text-heading font-heading mb-6 text-white animate-fade-in">Welcome to Tech Insights</h1>
+            <p className="text-xl mb-8 text-white/90">Discover the latest in technology, development, and design</p>
+            <button className="bg-white text-primary px-8 py-3 rounded-lg font-bold hover:bg-opacity-90 transition-all">
+              Explore Now
+            </button>
+          </div>
+        </section>
+
+        {/* Blog Posts Section */}
+        <section className="container mx-auto px-4 py-16">
+          <h2 className="text-3xl font-heading mb-12 text-center">Latest Articles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogPosts.map((post) => (
+              <article key={post.id} className="bg-card dark:bg-dark-card rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
+                <div className="p-6">
+                  <div className="flex items-center gap-4 mb-4 text-accent dark:text-dark-accent">
+                    <span className="flex items-center gap-1"><FaClock className="w-4 h-4" /> {post.readTime}</span>
+                    <span className="flex items-center gap-1"><FaUser className="w-4 h-4" /> {post.author}</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{post.title}</h3>
+                  <p className="text-accent dark:text-dark-accent mb-4">{post.excerpt}</p>
+                  <div className="flex gap-2">
+                    {post.tags.map((tag, index) => (
+                      <span key={index} className="flex items-center gap-1 text-sm bg-secondary dark:bg-dark-secondary px-3 py-1 rounded">
+                        <FaTag className="w-3 h-3" /> {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="container mx-auto px-4 py-16 bg-secondary dark:bg-dark-secondary">
+          <h2 className="text-3xl font-heading mb-12 text-center">Frequently Asked Questions</h2>
+          <div className="max-w-3xl mx-auto">
+            {faqData.map((faq) => (
+              <div key={faq.id} className="mb-4">
+                <button
+                  className="w-full flex items-center justify-between p-4 bg-card dark:bg-dark-card rounded-lg"
+                  onClick={() => setActiveFaq(activeFaq === faq.id ? null : faq.id)}
+                >
+                  <span className="font-bold">{faq.question}</span>
+                  {activeFaq === faq.id ? <FaChevronUp /> : <FaChevronDown />}
+                </button>
+                {activeFaq === faq.id && (
+                  <div className="p-4 bg-white dark:bg-dark-card mt-2 rounded-lg">
+                    {faq.answer}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Video Gallery */}
+        <section className="container mx-auto px-4 py-16">
+          <h2 className="text-3xl font-heading mb-12 text-center">Video Tutorials</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {videos.map((video) => (
+              <div
+                key={video.id}
+                className="relative group cursor-pointer"
+                onClick={() => openVideoModal(video)}
+              >
+                <img
+                  src={video.thumbnail}
+                  alt={video.title}
+                  className="w-full h-48 object-cover rounded-lg"
+                />
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg">
+                  <FaPlay className="w-12 h-12 text-white" />
+                </div>
+                <h3 className="mt-4 font-bold">{video.title}</h3>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Video Modal */}
+        {showVideoModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+            <div className="bg-card dark:bg-dark-card p-4 rounded-lg max-w-4xl w-full mx-4">
+              <div className="flex justify-end mb-4">
+                <button
+                  onClick={() => setShowVideoModal(false)}
+                  className="text-accent dark:text-dark-accent hover:text-destructive"
+                >
+                  <FaTimes className="w-6 h-6" />
+                </button>
+              </div>
+              <div className="aspect-w-16 aspect-h-9 bg-black rounded-lg">
+                <iframe
+                  src={selectedVideo?.url}
+                  title={selectedVideo?.title}
+                  className="w-full h-full"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Dark Mode Toggle */}
+        <button
+          onClick={toggleDarkMode}
+          className="fixed bottom-4 right-4 p-3 bg-card dark:bg-dark-card rounded-full shadow-lg"
+        >
+          {darkMode ? <FaSun className="w-6 h-6" /> : <FaMoon className="w-6 h-6" />}
+        </button>
+
+        {/* Footer */}
+        <footer className="bg-secondary dark:bg-dark-secondary py-8 mt-16">
+          <div className="container mx-auto px-4 text-center">
+            <p>© 2024 Tech Insights. All rights reserved.</p>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+};
+
+export default App;
+
+
+tailwind.config.js
+
+module.exports = {
+content: [
+    "./src/**/*.{js,jsx,ts,tsx,html}",
+],
+theme: {
+    extend: {
+        colors: {
+            primary: {
+                DEFAULT: "#0D6EFD",
+                foreground: "#FFFFFF"
+            },
+            secondary: {
+                DEFAULT: "#F0F1F3",
+                foreground: "#020817"
+            },
+            accent: {
+                DEFAULT: "#6D7074",
+                foreground: "#020817"
+            },
+            background: "#FAFAFB",
+            foreground: "#020817",
+            card: {
+                DEFAULT: "#FFFFFF",
+                foreground: "#020817"
+            },
+            popover: {
+                DEFAULT: "#FFFFFF",
+                foreground: "#020817"
+            },
+            muted: {
+                DEFAULT: "#F0F1F3",
+                foreground: "#6D7074"
+            },
+            destructive: {
+                DEFAULT: "#FF4C4C",
+                foreground: "#FFFFFF"
+            },
+            border: "#E0E0E0",
+            input: "#E0E0E0",
+            ring: "#0D6EFD",
+            chart: {
+                1: "#FF6F61",
+                2: "#4CAF50",
+                3: "#03A9F4",
+                4: "#FFC107",
+                5: "#8E44AD"
+            },
+            dark: {
+                primary: {
+                    DEFAULT: "#0D6EFD",
+                    foreground: "#FFFFFF"
+                },
+                secondary: {
+                    DEFAULT: "#1E1E2C",
+                    foreground: "#FAFAFB"
+                },
+                accent: {
+                    DEFAULT: "#6D7074",
+                    foreground: "#FAFAFB"
+                },
+                background: "#020817",
+                foreground: "#FAFAFB",
+                card: {
+                    DEFAULT: "#121212",
+                    foreground: "#FAFAFB"
+                },
+                popover: {
+                    DEFAULT: "#121212",
+                    foreground: "#FAFAFB"
+                },
+                muted: {
+                    DEFAULT: "#1E1E2C",
+                    foreground: "#6D7074"
+                },
+                destructive: {
+                    DEFAULT: "#FF4C4C",
+                    foreground: "#FFFFFF"
+                },
+                border: "#3C3C3C",
+                input: "#3C3C3C",
+                ring: "#0D6EFD"
+            }
+        },
+        borderRadius: {
+            sm: '0.125rem'
+        },
+        boxShadow: {
+            sm: '0 1px 2px 0 rgb(0 0 0 / 0.05)'
+        },
+        fontFamily: {
+            inter: ['Inter', 'sans-serif']
+        },
+        fontSize: {
+            heading: '36px',
+            body: '14px'
+        },
+        fontWeight: {
+            heading: '700',
+            body: '600'
+        }
+    },
+},
+plugins: [],
+darkMode: "class",
+}
